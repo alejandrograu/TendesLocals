@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TiendasLocales</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_inici">Inici</string>
+    <string name="action_map">Map</string>
+    <string name="txt_opt_sel">\"Option Selected: \"</string>
+    <string name="txt_action_inici">Start</string>
+    <string name="txt_action_map">Mapa</string>
+    <string name="title_activity_poblacions">Map</string>
+    <string name="title_activity_tendes">Map</string>
+    <string name="title_activity_info_tenda">InfoTendaActivity</string>
+    <string name="image_tenda">src_image</string>
+</resources>
