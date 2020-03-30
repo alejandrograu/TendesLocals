@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TendesActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -32,10 +33,14 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
                 .findFragmentById(R.id.map_tendes);
         mapFragment.getMapAsync(this);
         Bundle bundle=this.getIntent().getExtras();
-        tendesDAO=new TendesDAO(this);
+        try {
+            tendesDAO=new TendesDAO(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         tendes=tendesDAO.getTendesPoblacio(bundle.getString("poblacio"));
         Log.d("TendesActivity","onCreate");
-        Log.d("TendesActivity","tendes.size(): "+tendes.size()); // 0?
+        Log.d("TendesActivity","tendes.size(): "+tendes.size());
 
     }
 
@@ -44,7 +49,7 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
         Log.d("TendesActivity","onMapReady Start");
-        Log.d("TendesActivity","tendes.size(): "+tendes.size()); // 0?
+        Log.d("TendesActivity","tendes.size(): "+tendes.size());
 
         for(int i=0;i<tendes.size();i++){
             latLng = new LatLng((float)tendes.get(i).getLat(),(float)tendes.get(i).getLon());
@@ -52,7 +57,7 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
             mMap.addMarker(new MarkerOptions().position(latLng).title(tendes.get(i).getNom()).snippet(tendes.get(i).getTelefon()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
     }
 
@@ -61,6 +66,8 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
         Intent intent=new Intent(this,InfoTendaActivity.class);
         Bundle b=new Bundle();
         b.putString("Tenda",marker.getSnippet());
+        Log.d("TendesActivity","onMarkerClick marker.getId()="+marker.getId());
+        Log.d("TendesActivity","onMarkerClick marker.getTitle()="+marker.getTitle());
         intent.putExtras(b);
         startActivity(intent);
         return false;

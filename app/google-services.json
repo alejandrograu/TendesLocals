@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "280599053438",
+    "firebase_url": "https://tendes-locals.firebaseio.com",
+    "project_id": "tendes-locals",
+    "storage_bucket": "tendes-locals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280599053438:android:ba2f507c82afb6ec49442f",
+        "android_client_info": {
+          "package_name": "es.tiendaslocales"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280599053438-l3mu3njmsr10pnmv6h69lcndvspo9h1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.tiendaslocales",
+            "certificate_hash": "7d456e7a036cf1658081754dffa890ec469508fb"
+          }
+        },
+        {
+          "client_id": "280599053438-30ngr9c0g75jo8jpdecorvnh8o6a6h1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2bUCw8lakPMbapNIDwlFa07nPYWfYQzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280599053438-30ngr9c0g75jo8jpdecorvnh8o6a6h1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

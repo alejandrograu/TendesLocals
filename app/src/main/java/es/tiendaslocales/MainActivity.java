@@ -30,4 +30,9 @@ public class MainActivity extends MainMenu {
         startActivity(intent);
     }
 
+    public void clickBtntoShop(View view) {
+        Intent intent=new Intent(this, PoblacionsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 }
