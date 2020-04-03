@@ -7,25 +7,37 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME="tendeslocals";
-    private static int DATABASE_VERSION=DATABASE_VERSION();
-    private static final FirebaseStorage storage = FirebaseStorage.getInstance();
+    private static int DATABASE_VERSION;
+
+    static {
+        try {
+            DATABASE_VERSION = new FileManager().FileVersion();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ArrayList<String> dbSQL;
+
+    static {
+        try {
+            dbSQL = new FileManager().FileDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /*private static final FirebaseStorage storage = FirebaseStorage.getInstance();
     private static final StorageReference storageRef = storage.getReference();
     private static final StorageReference dbRef=storageRef.child("db/TLDB.sql");
     private static final StorageReference verRef=storageRef.child("versionDB");
-    private static final StorageReference imagesRef = storageRef.child("images");
+    private static final StorageReference imagesRef = storageRef.child("images");*/
 
     /*
     String sqlCreateTablePoblacions="CREATE TABLE poblacions (codi TEXT PRIMARY KEY, nom TEXT NOT NULL, cp TEXT, lat REAL, lon REAL)";
@@ -111,25 +123,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        BufferedReader fileRead= null;
-        try {
-            fileRead = new BufferedReader(new FileReader(String.valueOf(dbRef)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ArrayList<String> comanda=new ArrayList<>();
-        try {
-            String linia=fileRead.readLine();
-            while(linia!=null){
-                db.execSQL(linia);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fileRead.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(String dbExecSQL : dbSQL){
+            db.execSQL(dbExecSQL);
         }
 
         Log.d("SQL: ","onCreate");
@@ -160,25 +155,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        BufferedReader fileRead= null;
-        try {
-            fileRead = new BufferedReader(new FileReader(String.valueOf(dbRef)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ArrayList<String> comanda=new ArrayList<>();
-        try {
-            String linia=fileRead.readLine();
-            while(linia!=null){
-                db.execSQL(linia);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fileRead.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(String dbExecSQL : dbSQL){
+            db.execSQL(dbExecSQL);
         }
 
         Log.d("SQL: ","onUpgrade");
@@ -208,31 +186,4 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(sqlInsTenda16);*/
     }
 
-    public ArrayList<String> FileManager() throws IOException {
-        BufferedReader fileRead=new BufferedReader(new FileReader(String.valueOf(dbRef)));
-        ArrayList<String> comanda=new ArrayList<>();
-        try {
-            String linia=fileRead.readLine();
-            while(linia!=null){
-                comanda.add(linia);
-                linia=fileRead.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        fileRead.close();
-        return comanda;
-    }
-
-    public int DATABASE_VERSION() throws IOException {
-        BufferedReader fileRead=new BufferedReader(new FileReader(String.valueOf(verRef)));
-        int versio = 0;
-        try {
-            versio=Integer.parseInt(fileRead.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        fileRead.close();
-        return versio;
-    }
 }
