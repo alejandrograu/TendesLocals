@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static es.tiendaslocales.MainActivity.numOption;
+import static es.tiendaslocales.MainActivity.usuari;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -44,10 +45,16 @@ public class MainMenu extends AppCompatActivity {
             this.finish();
         }
         if (id == R.id.action_map) {
-            numOption=1;
-            displayToast(text + getString(R.string.txt_action_map));
-            intent = new Intent(this, PoblacionsActivity.class);
-            startActivity(intent);
+            if(usuari!=null){
+                numOption=1;
+                displayToast(text + getString(R.string.txt_action_map));
+                intent=new Intent(this, PoblacionsActivity.class);
+                startActivity(intent);
+            }else{
+
+                intent=new Intent(this, Login.class);
+                startActivity(intent);
+            }
         }
 
         if (id == R.id.action_shop) {

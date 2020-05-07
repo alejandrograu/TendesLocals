@@ -24,7 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/amarante"
         android:text="REGISTRE"
+        android:textAlignment="center"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -133,23 +136,23 @@
         android:id="@+id/imgGallery"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="20dp"
+        android:background="#00FFFFFF"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        app:layout_constraintEnd_toStartOf="@+id/imgProfile"
         app:srcCompat="@drawable/img_gallery" />
 
     <ImageButton
         android:id="@+id/imgCamera"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:background="#00FFFFFF"
         android:contentDescription="Image Profile"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        app:layout_constraintStart_toEndOf="@+id/imgProfile"
         app:srcCompat="@drawable/img_camera" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,6 @@
     <string name="txt_action_shop">Tendes</string>
     <string name="action_info">Informacio</string>
     <string name="action_Shop">Tendes</string>
-    <string name="txtInfoHome">Seleccionar \"Mapa\" per a entrar al mapa y seleccionar, afegir o eliminar \"Poblacions\". O cambiar la Poblacio \"Favorita\".</string>
+    <string name="txtInfoHome">Seleccionar \"Mapa\" per a entrar al mapa y seleccionar, afegir o eliminar \"Poblacions\". O cambiar la Poblacio \"Favorita\".\nSeleccionar \"Tendes\" per vore la llista de tendes.</string>
     <string name="txtInfoMap">Per afegir \"Pobles\" com \"Tendes\", mantindre pulsat sobre el mapa en la ubicacio exacte per afegir. Per a cambiar el Poble \"Favorit\" seleccionar el poble i polsar en \"Favorit\".</string>
 </resources>
