@@ -9,11 +9,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="action_inici">Inici</string>
+    <string name="action_inici">Home</string>
     <string name="action_map">Map</string>
     <string name="txt_opt_sel">\"Option Selected: \"</string>
     <string name="txt_action_inici">Start</string>
-    <string name="txt_action_map">Mapa</string>
+    <string name="txt_action_map">Map</string>
     <string name="title_activity_poblacions">Map</string>
     <string name="title_activity_tendes">Map</string>
     <string name="title_activity_info_tenda">InfoTendaActivity</string>
@@ -22,4 +22,9 @@
     <string name="txtbtn2">Favorit</string>
     <string name="txtbtn3">Entrar</string>
     <string name="txt_lat_lng">Lat/lng:</string>
+    <string name="txt_action_shop">Tendes</string>
+    <string name="action_info">Informacio</string>
+    <string name="action_Shop">Tendes</string>
+    <string name="txtInfoHome">Seleccionar \"Mapa\" per a entrar al mapa y seleccionar, afegir o eliminar \"Poblacions\". O cambiar la Poblacio \"Favorita\".</string>
+    <string name="txtInfoMap">Per afegir \"Pobles\" com \"Tendes\", mantindre pulsat sobre el mapa en la ubicacio exacte per afegir. Per a cambiar el Poble \"Favorit\" seleccionar el poble i polsar en \"Favorit\".</string>
 </resources>

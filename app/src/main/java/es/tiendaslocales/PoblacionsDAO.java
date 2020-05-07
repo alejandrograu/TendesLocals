@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PoblacionsDAO {
@@ -13,7 +12,7 @@ public class PoblacionsDAO {
     ArrayList<Poblacio> llistaPoblacions;
 
 
-    public PoblacionsDAO(Context context) throws IOException {
+    public PoblacionsDAO(Context context){
         connexio=new MySQLiteHelper(context);
         db=connexio.getWritableDatabase();
     }

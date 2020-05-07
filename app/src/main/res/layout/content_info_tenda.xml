@@ -20,59 +20,72 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph2" /> -->
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/image_tenda"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/store"
-        tools:layout_editor_absoluteX="77dp"
-        tools:layout_editor_absoluteY="158dp" />
-
     <TextView
         android:id="@+id/txt_nom"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_poblacio"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textAlignment="center"
         android:textSize="18sp"
-        tools:layout_editor_absoluteY="41dp" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nom" />
 
     <TextView
         android:id="@+id/txt_adresa"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textAlignment="center"
         android:textSize="18sp"
-        tools:layout_editor_absoluteY="65dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_poblacio" />
 
     <TextView
         android:id="@+id/txt_telefon"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="89dp" />
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_adresa" />
 
     <Button
         android:id="@+id/btn_telefono"
         style="@android:style/Widget.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_green"
         android:drawableLeft="@android:drawable/ic_menu_call"
-        android:text="600123456"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="108dp" />
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_telefon" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/image_tenda"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_telefono"
+        app:srcCompat="@drawable/store" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

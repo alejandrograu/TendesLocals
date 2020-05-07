@@ -22,21 +22,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener {
+public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private static final int LOCATION_REQUEST_CODE=1;
     private Marker markerPoble;
-    private final LatLng home = new LatLng(39.470120, -0.377187);
+    private LatLng homeLatLng = new LatLng(39.470120, -0.377187);
     private GoogleMap mMap;
     private ArrayList<Poblacio> poblacions;
     private Poblacio poble;
     private LatLng latLng;
     private PoblacionsDAO myPoblacionsDAO;
     String nomTenda;
-    Button infobtn3;
+    Button btnEnter;
     TextView txtLatLng;
 
     @Override
@@ -47,15 +46,10 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_poblacions);
         mapFragment.getMapAsync(this);
-        Log.d("PoblacionsActivity","onCreate");
-        try {
-            myPoblacionsDAO=new PoblacionsDAO(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        poblacions=myPoblacionsDAO.getPoblacions();
-        Log.d("PoblacionsActivity","poblacions.size(): "+poblacions.size());
 
+        myPoblacionsDAO=new PoblacionsDAO(this);
+
+        poblacions=myPoblacionsDAO.getPoblacions();
     }
 
 
@@ -71,8 +65,9 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        infobtn3=(Button)findViewById(R.id.button3);
-        infobtn3.setVisibility(View.INVISIBLE);
+        mMap.setOnInfoWindowClickListener(this);
+        btnEnter=(Button)findViewById(R.id.btnEnter);
+        btnEnter.setVisibility(View.INVISIBLE);
         txtLatLng=findViewById(R.id.textView_latlng);
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -81,7 +76,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         //mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
         mMap.getUiSettings().setZoomControlsEnabled(false);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, 15));
 
         // Controles UI
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -102,7 +97,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Marcadores
-        mMap.addMarker(new MarkerOptions().position(new LatLng(39.470120, -0.377187)).title("CV").snippet("Comunitat Valenciana").icon(BitmapDescriptorFactory
+        mMap.addMarker(new MarkerOptions().position(new LatLng(39.470120, -0.377187)).title("VALENCIA").snippet("Comunitat Valenciana").icon(BitmapDescriptorFactory
                 .fromResource(android.R.drawable.ic_menu_compass)).anchor(0.5f, 0.5f));
 
         for(int i=0;i<poblacions.size();i++){
@@ -142,7 +137,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     @Override
     public boolean onMarkerClick(Marker marker){
         markerPoble=marker;
-        infobtn3.setVisibility(View.VISIBLE);
+        btnEnter.setVisibility(View.VISIBLE);
         txtLatLng.setText(marker.getPosition().toString());
 
         return false;
@@ -150,29 +145,35 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
 
     @Override
     public void onMapClick(LatLng latLng) {
-        infobtn3.setVisibility(View.INVISIBLE);
+
+        btnEnter.setVisibility(View.INVISIBLE);
         txtLatLng.setText(latLng.toString());
 
     }
 
     public void back(View view) {
+        this.finish();
     }
 
     public void favorit(View view) {
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(home));
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(homeLatLng));
     }
 
     public void entrar(View view) {
+        Log.d("PoblacionsActivity","onMarkerClick marker.getId()="+markerPoble.getId());
+        Log.d("PoblacionsActivity","onMarkerClick marker.getTitle()="+markerPoble.getTitle());
+        Log.d("PoblacionsActivity","onMarkerClick marker.getSnippet()="+markerPoble.getSnippet());
         Intent intent=new Intent(this,TendesActivity.class);
         Bundle b=new Bundle();
         b.putString("poblacio",markerPoble.getId());
         b.putString("cp",markerPoble.getSnippet());
-        Log.d("PoblacionsActivity","onMarkerClick marker.getId()="+markerPoble.getId());
-        Log.d("PoblacionsActivity","onMarkerClick marker.getTitle()="+markerPoble.getTitle());
-        Log.d("PoblacionsActivity","onMarkerClick marker.getSnippet()="+markerPoble.getSnippet());
-
         intent.putExtras(b);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
 
     }
 }

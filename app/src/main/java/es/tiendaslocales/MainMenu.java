@@ -7,13 +7,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static es.tiendaslocales.MainActivity.numOption;
+
 public class MainMenu extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        for (int i = 0; i < menu.size(); i++) {
+            if (i == numOption) menu.getItem(i).setVisible(false);
+            else menu.getItem(i).setVisible(true);
+        }
+
         return true;
+
+
     }
 
     @Override
@@ -23,21 +33,35 @@ public class MainMenu extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         String text=getString(R.string.txt_opt_sel);
+        Intent intent;
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_inici) {
+        if (id == R.id.action_home) {
+            numOption=0;
             displayToast(text + getString(R.string.txt_action_inici));
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            return true;
+            /*intent = new Intent(this, MainActivity.class);
+            startActivity(intent);*/
+            this.finish();
         }
         if (id == R.id.action_map) {
+            numOption=1;
             displayToast(text + getString(R.string.txt_action_map));
-            Intent intent = new Intent(this, PoblacionsActivity.class);
+            intent = new Intent(this, PoblacionsActivity.class);
             startActivity(intent);
+        }
+
+        if (id == R.id.action_shop) {
+            numOption=2;
+            displayToast(text + getString(R.string.txt_action_shop));
             return true;
         }
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_info) {
+            String msg="";
+            if (numOption==0) msg=getString(R.string.txtInfoHome);
+            if (numOption==1) msg=getString(R.string.txtInfoMap);
+            if (numOption==2) msg=getString(R.string.txtInfoHome);
+
+            new CuadroDialogo(this, msg);
             return true;
         }
 

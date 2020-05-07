@@ -4,7 +4,7 @@
     tools:context="es.tiendaslocales.MainActivity">
 
     <item
-        android:id="@+id/action_inici"
+        android:id="@+id/action_home"
         android:orderInCategory="100"
         android:title="@string/action_inici"
         app:showAsAction="never" />
@@ -13,9 +13,15 @@
         android:orderInCategory="100"
         android:title="@string/action_map"
         app:showAsAction="never" />
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_shop"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_Shop"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="100"
+        android:title="@string/action_info"
         app:showAsAction="never" />
 </menu>

@@ -2,11 +2,23 @@ package es.tiendaslocales;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class MainActivity extends MainMenu {
+    static int numOption=0;
+
+    static int DATABASE_VERSION;
+    static ArrayList<String> dataBaseSQL=new ArrayList<>();
+    static String usuari,clau;
+    static ArrayList<User> usersDB=new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,24 +27,49 @@ public class MainActivity extends MainMenu {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        }); */
+        try {
+            usersDB=new FileManager().usuaris();
+            DATABASE_VERSION=new FileManager().FileVersion();
+            Log.d("MainActivity","DATABASE_VERSION="+DATABASE_VERSION);
+            dataBaseSQL=new FileManager().FileDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("MainActivity","userDB.size()= "+usersDB.size());
+
+        if ((new FileManager().fileUserExists(this))==null){
+            Intent intent=new Intent(this, Login.class);
+            startActivity(intent);
+        }else{
+            displayToast("Benvingut de nou \""+usuari+"\"!");
+        }
+
     }
     public void clickBtntoMap(View view) {
-        Intent intent=new Intent(this, PoblacionsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if(usuari!=null){
+            numOption=1;
+            Log.d("MainActivity","usuari="+usuari+" DATABASE_VERSION="+DATABASE_VERSION);
+            Intent intent=new Intent(this, PoblacionsActivity.class);
+            startActivity(intent);
+        }else{
+
+            Intent intent=new Intent(this, Login.class);
+            startActivity(intent);
+        }
+
     }
 
     public void clickBtntoShop(View view) {
-        Intent intent=new Intent(this, PoblacionsActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        if(usuari!=null){
+            numOption=2;
+            Intent intent=new Intent(this, PoblacionsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }else{
+            Intent intent=new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }
