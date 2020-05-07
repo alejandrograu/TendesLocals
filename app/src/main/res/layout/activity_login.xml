@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/img_perfil" />
+        app:srcCompat="@drawable/img_perfil" />
 
     <EditText
         android:id="@+id/editName"
@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:background="@drawable/gradient_green"
         android:onClick="login"
         android:text="Login"
         app:layout_constraintEnd_toStartOf="@+id/btnNewUser"
@@ -58,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:background="@drawable/gradient_red"
         android:onClick="cancel"
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:background="@drawable/gradient_blue"
         android:onClick="newUser"
         android:text="NewUser"
         app:layout_constraintEnd_toEndOf="parent"
