@@ -313,6 +313,25 @@ public class FileManager extends AppCompatActivity {
         });
 
     }
+    public void uploadImg(final Context context, Uri uri){
+        Log.d("FileManager","Start uploadImg()");
+        //Uri file=Uri.fromFile(new File(context.getFilesDir(),usuari+"DB"));
+        Log.d("FileManager","uploadImg file="+uri);
+        StorageReference riversRef=storageRef.child("images/"+usuari+"Profile");
+        riversRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl=taskSnapshot.getUploadSessionUri();
+                displayToast(context,"uploadImg OK!");
+                Log.d("FileManager","uploadImg OK!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FileManager","Error en uploadImg ==>"+e);
+            }
+        });
+    }
     public void downloadDB() throws IOException {
         //Uri file=Uri.fromFile(new File(usuari));
         StorageReference riversRef=storageRef.child("db").child(usuari+"DB");
