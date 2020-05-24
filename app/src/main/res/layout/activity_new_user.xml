@@ -15,6 +15,7 @@
         android:ems="10"
         android:hint="LastName"
         android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPass" />
@@ -33,14 +34,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgProfile"
+        android:id="@+id/imgPerfil_newuser_activity"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogin"
         app:srcCompat="@drawable/img_perfil" />
 
     <EditText
@@ -53,9 +55,10 @@
         android:ems="10"
         android:hint="NAME"
         android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPerfil_newuser_activity" />
 
     <EditText
         android:id="@+id/editPass"
@@ -66,6 +69,7 @@
         android:ems="10"
         android:hint="PASSWORD"
         android:inputType="textVisiblePassword"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
@@ -77,7 +81,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/gradient_green"
         android:onClick="login"
-        android:text="Login"
+        android:text="Crear"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCancel"
         app:layout_constraintStart_toStartOf="parent" />
@@ -103,6 +107,7 @@
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editLastName" />
@@ -116,6 +121,7 @@
         android:ems="10"
         android:hint="eMail"
         android:inputType="textEmailAddress"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAddress" />
@@ -129,6 +135,7 @@
         android:ems="10"
         android:hint="Phone"
         android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmail" />
@@ -137,11 +144,12 @@
         android:id="@+id/imgGallery"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
         android:background="#00FFFFFF"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtgallery"
-        app:layout_constraintEnd_toStartOf="@+id/imgProfile"
+        app:layout_constraintEnd_toStartOf="@+id/imgPerfil_newuser_activity"
         app:srcCompat="@drawable/img_gallery" />
 
     <TextView
@@ -150,7 +158,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amarante"
         android:text="Gallery"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPerfil_newuser_activity"
         app:layout_constraintEnd_toEndOf="@+id/imgGallery"
         app:layout_constraintStart_toStartOf="@+id/imgGallery" />
 
@@ -158,12 +167,13 @@
         android:id="@+id/imgCamera"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
         android:background="#00FFFFFF"
         android:contentDescription="Image Profile"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtcamera"
-        app:layout_constraintStart_toEndOf="@+id/imgProfile"
+        app:layout_constraintStart_toEndOf="@+id/imgPerfil_newuser_activity"
         app:srcCompat="@drawable/img_camera" />
 
     <TextView
@@ -172,7 +182,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amarante"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPerfil_newuser_activity"
         app:layout_constraintEnd_toEndOf="@+id/imgCamera"
         app:layout_constraintStart_toStartOf="@+id/imgCamera" />
 

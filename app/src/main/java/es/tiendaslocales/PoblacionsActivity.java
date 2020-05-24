@@ -3,10 +3,11 @@ package es.tiendaslocales;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,19 +25,23 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener {
+import static es.tiendaslocales.MainActivity.favorit;
+import static es.tiendaslocales.MainActivity.usersDB;
+import static es.tiendaslocales.MainActivity.usuari;
+
+public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMapLongClickListener {
 
     private static final int LOCATION_REQUEST_CODE=1;
     private Marker markerPoble;
     private LatLng homeLatLng = new LatLng(39.470120, -0.377187);
     private GoogleMap mMap;
     private ArrayList<Poblacio> poblacions;
-    private Poblacio poble;
     private LatLng latLng;
     private PoblacionsDAO myPoblacionsDAO;
-    String nomTenda;
-    Button btnEnter;
-    TextView txtLatLng;
+    TextView txtLatLng, txtFavorit;
+    ImageView iconstar;
+    Uri imageUriTrue, imageUriFalse;
+    static String [] dades=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,28 +52,31 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
                 .findFragmentById(R.id.map_poblacions);
         mapFragment.getMapAsync(this);
 
-        myPoblacionsDAO=new PoblacionsDAO(this);
+        for( User user:usersDB){
+            if(user.getNom().equals(usuari)){
+                favorit=user.getFavorit();
+            }
+        }
 
+        myPoblacionsDAO=new PoblacionsDAO(this);
         poblacions=myPoblacionsDAO.getPoblacions();
+
+        imageUriTrue= Uri.parse("android.resource://"+getPackageName()+"/"+R.drawable.star_icon_1);
+        imageUriFalse= Uri.parse("android.resource://"+getPackageName()+"/"+R.drawable.star_icon_0);
+
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnInfoWindowClickListener(this);
-        btnEnter=(Button)findViewById(R.id.btnEnter);
-        btnEnter.setVisibility(View.INVISIBLE);
+        iconstar=(ImageView) findViewById(R.id.imgstaricon);
+        iconstar.setVisibility(View.INVISIBLE);
+        txtFavorit=(TextView) findViewById(R.id.txtFavorit);
+        txtFavorit.setVisibility(View.INVISIBLE);
         txtLatLng=findViewById(R.id.textView_latlng);
+        //markerFavorit=mMap.addMarker(new MarkerOptions().position(new LatLng(39.470120, -0.377187)).title("VALENCIA").snippet("Comunitat Valenciana").icon(BitmapDescriptorFactory.fromResource(android.R.drawable.ic_menu_compass)).anchor(0.5f, 0.5f));
+
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -78,10 +86,11 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, 15));
 
-        // Controles UI
+        // Controles UI i Permisos
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setCompassEnabled(true);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -96,6 +105,11 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         }
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+        // Eventos
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
+
         // Marcadores
         mMap.addMarker(new MarkerOptions().position(new LatLng(39.470120, -0.377187)).title("VALENCIA").snippet("Comunitat Valenciana").icon(BitmapDescriptorFactory
                 .fromResource(android.R.drawable.ic_menu_compass)).anchor(0.5f, 0.5f));
@@ -103,18 +117,13 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         for(int i=0;i<poblacions.size();i++){
             latLng = new LatLng(poblacions.get(i).getLat(),poblacions.get(i).getLon());
             mMap.addMarker(new MarkerOptions().position(latLng).title(poblacions.get(i).getPoblacio()).snippet(poblacions.get(i).getCp()));
+            if(poblacions.get(i).getCodi().equals(favorit)){
+                homeLatLng=latLng;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(homeLatLng, 15));
+            }
         }
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
         // mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
-
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnMapClickListener(this);
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setCompassEnabled(true);
-        }
 
     }
 
@@ -137,8 +146,22 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     @Override
     public boolean onMarkerClick(Marker marker){
         markerPoble=marker;
-        btnEnter.setVisibility(View.VISIBLE);
+
+        //if(marker.equals(markerFavorit)){
+        if(marker.getId().equals(favorit)){
+            iconstar.setImageURI(imageUriTrue);
+            txtFavorit.setVisibility(View.VISIBLE);
+        }else{
+            iconstar.setImageURI(imageUriFalse);
+            txtFavorit.setVisibility(View.INVISIBLE);
+        }
+
+        iconstar.setVisibility(View.VISIBLE);
         txtLatLng.setText(marker.getPosition().toString());
+
+        Log.d("PoblacionsActivity","onMarkerClick marker.getId()="+markerPoble.getId());
+        Log.d("PoblacionsActivity","onMarkerClick marker.getTitle()="+markerPoble.getTitle());
+        Log.d("PoblacionsActivity","onMarkerClick marker.getSnippet()="+markerPoble.getSnippet());
 
         return false;
     }
@@ -146,9 +169,10 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     @Override
     public void onMapClick(LatLng latLng) {
 
-        btnEnter.setVisibility(View.INVISIBLE);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        iconstar.setVisibility(View.INVISIBLE);
+        txtFavorit.setVisibility(View.INVISIBLE);
         txtLatLng.setText(latLng.toString());
-
     }
 
     public void back(View view) {
@@ -159,21 +183,54 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         mMap.animateCamera(CameraUpdateFactory.newLatLng(homeLatLng));
     }
 
-    public void entrar(View view) {
-        Log.d("PoblacionsActivity","onMarkerClick marker.getId()="+markerPoble.getId());
-        Log.d("PoblacionsActivity","onMarkerClick marker.getTitle()="+markerPoble.getTitle());
-        Log.d("PoblacionsActivity","onMarkerClick marker.getSnippet()="+markerPoble.getSnippet());
-        Intent intent=new Intent(this,TendesActivity.class);
-        Bundle b=new Bundle();
-        b.putString("poblacio",markerPoble.getId());
-        b.putString("cp",markerPoble.getSnippet());
-        intent.putExtras(b);
-        startActivity(intent);
 
+    public void seticonstar(View view){
+       homeLatLng= new LatLng(markerPoble.getPosition().latitude, markerPoble.getPosition().longitude);
+       favorit=markerPoble.getId();
+       iconstar.setImageURI(imageUriTrue);
+       txtFavorit.setVisibility(View.VISIBLE);
+       for (User user:usersDB){
+           if(user.getNom().equals(usuari))
+               user.setFavorit(favorit);
+           new FileManager().insertarDades("favorit", favorit);
+       }
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        if(!markerPoble.getId().equals("m0")){
+            Intent intent=new Intent(this,TendesActivity.class);
+            Bundle b=new Bundle();
+            b.putString("poblacio",markerPoble.getId());
+            b.putString("cp",markerPoble.getSnippet());
+            intent.putExtras(b);
+            startActivity(intent);
+        }else{
+
+        }
+    }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+
+        /*Intent intent=new Intent(this, PoblacioNova.class);
+        Bundle b=new Bundle();
+        b.putDouble("lat", point.latitude);
+        b.putDouble("lon", point.longitude);
+        intent.putExtras(b);
+        startActivity(intent);
+        mMap.addMarker(new MarkerOptions().position(point).draggable(true));*/
+
+        Log.d("PoblacionsActivity","Start onMapLongClick");
+        new PoblacioNova(this);
+        if(dades!=null){
+            new FileManager().insertDB(this,markerPoble, "poblacions");
+
+            //mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
+            markerPoble=mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
+
+            markerPoble.showInfoWindow();
+        }
 
     }
 }

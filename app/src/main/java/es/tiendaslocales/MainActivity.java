@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,8 +16,9 @@ public class MainActivity extends MainMenu {
 
     static int DATABASE_VERSION;
     static ArrayList<String> dataBaseSQL=new ArrayList<>();
-    static String usuari,clau;
+    static String usuari,clau, favorit;
     static ArrayList<User> usersDB=new ArrayList<>();
+    static ImageView imgPerfil_toolbar_class;
 
 
 
@@ -26,6 +28,8 @@ public class MainActivity extends MainMenu {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        imgPerfil_toolbar_class=findViewById(R.id.imgPerfil_toolbar_activity);
 
         try {
             usersDB=new FileManager().usuaris();

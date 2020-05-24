@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String telefon;
     private String imgperfil;
+    private String favorit;
 
     public User(){
 
@@ -70,6 +71,14 @@ public class User {
         this.imgperfil = imgperfil;
     }
 
+    public String getFavorit() {
+        return favorit;
+    }
+
+    public void setFavorit(String favorit) {
+        this.favorit = favorit;
+    }
+
     public String getText(){
         String text="nom="+nom+"\n";
         text+="clau="+clau+"\n";
@@ -78,6 +87,7 @@ public class User {
         text+="clau="+email+"\n";
         text+="clau="+telefon+"\n";
         text+="clau="+imgperfil+"\n";
+        text+="favorit="+favorit+"\n";
         return text;
     }
 

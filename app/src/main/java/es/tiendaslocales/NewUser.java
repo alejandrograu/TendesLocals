@@ -1,7 +1,11 @@
 package es.tiendaslocales;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -13,14 +17,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import static es.tiendaslocales.Login.editName;
+import static es.tiendaslocales.Login.imgPerfil_login_class;
+import static es.tiendaslocales.MainActivity.imgPerfil_toolbar_class;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
 
@@ -29,18 +38,20 @@ public class NewUser extends AppCompatActivity {
 
 
     ImageButton imgGallery, imgCamera;
-    ImageView imageProfile;
+    ImageView imgPerfil_newuser_class;
     EditText editNom, editPass, editApell, editDir, editEmail, editTelefon;
     Button btnLogin, btnCancel;
     private static final int PICK_IMAGE=100;
+    public final static int RESP_TOMAR_FOTO=1;
     Uri imageUri;
-
-
+    Context context=this;
+    String pobleFavorit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
+        imageUri=Uri.parse("android.resource://"+getPackageName()+"/"+R.drawable.img_perfil);
 
         imgGallery=findViewById(R.id.imgGallery);
         imgCamera=findViewById(R.id.imgCamera);
@@ -52,7 +63,8 @@ public class NewUser extends AppCompatActivity {
         editTelefon=findViewById(R.id.editPhone);
         btnLogin=findViewById(R.id.btnLogin);
         btnCancel=findViewById(R.id.btnCancel);
-        imageProfile=findViewById(R.id.imgProfile);
+        imgPerfil_newuser_class=findViewById(R.id.imgPerfil_newuser_activity);
+        pobleFavorit="m0";
 
         imgGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +72,47 @@ public class NewUser extends AppCompatActivity {
                 openGallery();
             }
         });
+        imgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCamera();
+            }
+        });
 
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            // Verifica permisos para Android 6+
+            checkExternalStoragePermission();
+        }
+
+    }
+
+    private void checkExternalStoragePermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            Log.e("NewUser", "Permission not granted WRITE_EXTERNAL_STORAGE.");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        225);
+            }
+        }if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.e("NewUser", "Permission not granted CAMERA.");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        226);
+            }
+        }
     }
 
     private void openGallery(){
@@ -69,18 +121,33 @@ public class NewUser extends AppCompatActivity {
         Log.d("NewUser","PICK_IMAGE="+PICK_IMAGE);
     }
 
+    private void openCamera(){
+        File fotoFile=new File(context.getFilesDir(),"fotoPerfil");
+        String pathFotoFile=fotoFile.getAbsolutePath();
+        Uri fotoUri=Uri.fromFile(fotoFile);
+        Log.d("NewUser","fotoUri="+fotoUri);
+        Intent camera=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(camera.resolveActivity(getPackageManager()) != null){
+            Log.d("NewUser","openCamera if resolveActivity not null");
+            camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+            startActivityForResult(camera, RESP_TOMAR_FOTO);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK && requestCode==PICK_IMAGE){
+        Log.d("NewUser","onActivityRestult START!");
+        Log.d("NewUser","resultCode="+resultCode+" requestCode="+requestCode);
+        if(resultCode==RESULT_OK && (requestCode==PICK_IMAGE || requestCode==RESP_TOMAR_FOTO )){
             imageUri=data.getData();
-            imageProfile.setImageURI(imageUri);
+            imgPerfil_newuser_class.setImageURI(imageUri);
+            imgPerfil_toolbar_class.setImageURI(imageUri);
             Log.d("NewUser","requestCode="+requestCode);
             Log.d("NewUser","resultCode="+resultCode);
             Log.d("NewUser","data="+data);
             Log.d("NewUSer","imageUri="+imageUri);
-            //imageProfile.getDisplay();
-
+            Log.d("NewUSer","imgPerfil_newuser_class="+imgPerfil_newuser_class);
 
         }
     }
@@ -98,7 +165,8 @@ public class NewUser extends AppCompatActivity {
         nouUsuari.setDireccio(editDir.getText().toString());
         nouUsuari.setEmail(editEmail.getText().toString());
         nouUsuari.setTelefon(editTelefon.getText().toString());
-        nouUsuari.setImgperfil(editNom.getText().toString()+"Profile");
+        nouUsuari.setImgperfil("imgPerfil_"+editNom.getText().toString());
+        nouUsuari.setFavorit(pobleFavorit);
 
         try {
             if (nom.length()>=5){
@@ -110,8 +178,17 @@ public class NewUser extends AppCompatActivity {
                         usersDB.add(nouUsuari);
                         usuari=nom;
                         editName.setText(nom);
-                        new FileManager().fileUserExists(this);
-                        new FileManager().uploadImg(this,imageUri);
+                        imgPerfil_login_class.setImageURI(imageUri);
+                        imgPerfil_toolbar_class.setImageURI(imageUri);
+                        Log.d("NewUser","imageUri="+imageUri);
+
+                        FileManager usuariNou=new FileManager();
+                        usuariNou.usuaris();
+                        usuariNou.createLocalFileUser(context);
+                        usuariNou.createFileDB(context);
+                        usuariNou.uploadDB(context);
+                        usuariNou.uploadImg(this,imageUri);
+
                         displayToast("Usuari Guardat Correctament!");
                         finish();
                     }
@@ -130,6 +207,7 @@ public class NewUser extends AppCompatActivity {
     }
 
     private void cargarDatosFirebase(User user) {
+        Log.d("NewUser","Start cargarDatosFirebase");
         Map<String, Object> datosUsuari=new HashMap<>();
         datosUsuari.put("nom", user.getNom());
         datosUsuari.put("clau", user.getClau());
@@ -138,8 +216,10 @@ public class NewUser extends AppCompatActivity {
         datosUsuari.put("email", user.getEmail());
         datosUsuari.put("telefon", user.getTelefon());
         datosUsuari.put("imgperfil", user.getImgperfil());
+        datosUsuari.put("favorit",user.getFavorit());
 
         usuariReference.push().setValue(datosUsuari);
+        Log.d("NewUser","Usuari creat!");
         displayToast("Usuari Creat!!");
     }
 
@@ -153,4 +233,6 @@ public class NewUser extends AppCompatActivity {
         Toast toast= Toast.makeText(this,text, duration);
         toast.show();
     }
+
+
 }

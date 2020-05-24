@@ -21,14 +21,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgProfile"
+        android:id="@+id/imgPerfil_login_activity"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="Image Perfil"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogin"
         app:srcCompat="@drawable/img_perfil" />
 
     <EditText

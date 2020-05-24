@@ -16,18 +16,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TendesActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class TendesActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private ArrayList<Tenda> tendes;
     private Tenda tenda;
     private LatLng latLng;
     private TendesDAO tendesDAO;
+    private Marker markerTenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tendes);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_tendes);
@@ -48,6 +50,7 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+
         Log.d("TendesActivity","onMapReady Start");
         Log.d("TendesActivity","tendes.size(): "+tendes.size());
 
@@ -57,12 +60,37 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
             mMap.addMarker(new MarkerOptions().position(latLng).title(tendes.get(i).getNom()).snippet(tendes.get(i).getTelefon()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
         }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+        //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        //mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,12));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        // Eventos
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnMapClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
     public boolean onMarkerClick(Marker marker){
+        markerTenda=marker;
+        return false;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
         Intent intent=new Intent(this,InfoTendaActivity.class);
         Bundle b=new Bundle();
         b.putString("Tenda",marker.getSnippet());
@@ -70,6 +98,5 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
         Log.d("TendesActivity","onMarkerClick marker.getTitle()="+marker.getTitle());
         intent.putExtras(b);
         startActivity(intent);
-        return false;
     }
 }

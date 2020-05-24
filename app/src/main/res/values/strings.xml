@@ -14,8 +14,8 @@
     <string name="txt_opt_sel">\"Option Selected: \"</string>
     <string name="txt_action_inici">Start</string>
     <string name="txt_action_map">Map</string>
-    <string name="title_activity_poblacions">Map</string>
-    <string name="title_activity_tendes">Map</string>
+    <string name="title_activity_poblacions">Mapa de Pobles</string>
+    <string name="title_activity_tendes">Mapa de Tendes</string>
     <string name="title_activity_info_tenda">InfoTendaActivity</string>
     <string name="image_tenda">src_image</string>
     <string name="txtbtn1">Enrerre</string>

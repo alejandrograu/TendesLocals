@@ -13,8 +13,10 @@
         android:layout_height="0dp"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintHorizontal_bias="1.0"
         map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent" />
+        map:layout_constraintTop_toTopOf="parent"
+        map:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView_latlng"
@@ -30,14 +32,13 @@
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/gradient_yellow"
         android:drawableLeft="@android:drawable/ic_media_rew"
         android:onClick="back"
         android:text="@string/txtbtn1"
         map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toStartOf="@+id/btnFav"
         map:layout_constraintHorizontal_chainStyle="spread_inside"
         map:layout_constraintStart_toStartOf="parent" />
 
@@ -45,27 +46,32 @@
         android:id="@+id/btnFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/gradient_blue"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/gradient_orange"
         android:drawableLeft="@android:drawable/arrow_up_float"
         android:onClick="favorit"
         android:text="@string/txtbtn2"
         map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toStartOf="@+id/btnEnter"
         map:layout_constraintStart_toEndOf="@+id/btnBack" />
 
-    <Button
-        android:id="@+id/btnEnter"
+    <ImageView
+        android:id="@+id/imgstaricon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="seticonstar"
+        map:layout_constraintStart_toStartOf="@+id/map_poblacions"
+        map:layout_constraintTop_toBottomOf="@+id/textView_latlng"
+        map:srcCompat="@drawable/star_icon_0" />
+
+    <TextView
+        android:id="@+id/txtFavorit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/gradient_red"
-        android:drawableLeft="@android:drawable/arrow_down_float"
-        android:onClick="entrar"
-        android:text="@string/txtbtn3"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toEndOf="@+id/btnFav" />
+        android:fontFamily="@font/amarante"
+        android:text="Favorit"
+        map:layout_constraintEnd_toEndOf="@+id/imgstaricon"
+        map:layout_constraintStart_toStartOf="@+id/imgstaricon"
+        map:layout_constraintTop_toBottomOf="@+id/imgstaricon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

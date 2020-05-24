@@ -28,16 +28,6 @@ public class InfoTendaActivity extends MainMenu {
         adresa=(TextView)findViewById(R.id.txt_adresa);
         telefon=(Button)findViewById(R.id.btn_telefono);
 
-
-        /* FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        }); */
-
         Bundle bundle=this.getIntent().getExtras();
         String nomTenda=bundle.getString("Tenda");
         Tenda objecteTenda=TendesDAO.getTendaTelefon(nomTenda);

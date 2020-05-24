@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import static es.tiendaslocales.MainActivity.clau;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
+import static es.tiendaslocales.MainActivity.favorit;
 
 
 public class Login extends AppCompatActivity {
 
     static EditText editName;
+    static ImageView imgPerfil_login_class;
     EditText editPass;
 
     @Override
@@ -24,6 +27,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        imgPerfil_login_class=findViewById(R.id.imgPerfil_login_activity);
         editName=findViewById(R.id.editName);
         editPass=findViewById(R.id.editPass);
     }
@@ -35,21 +39,23 @@ public class Login extends AppCompatActivity {
         if (username.length()>=5 && passuser.length()>=5){
             Boolean valor=false;
             for(User user:usersDB){
-                if ((user.getNom().equals(username)) && (user.getClau().equals(passuser))) {
+                if ((user.getNom().equals(username)) && (user.getClau().equals(passuser)) && !valor) {
                     usuari = username;
                     clau = passuser;
                     try {
                         new FileManager().fileUserExists(this);
+                        new FileManager().usuaris();
                     }catch(Exception e){
                         Log.e("Login","Error="+e);
                     }
-                    displayToast("Acces correcte!\nBenvingut "+usuari);
+                    displayToast("Acces correcte!\nBenvingut "+usuari+" !!!");
                     valor=true;
+                    favorit=user.getFavorit();
                     finish();
                 }//else{ displayToast("Nom o Clau INCORRECTA!");}
             }if(!valor)displayToast("Nom o Clau INCORRECTA!");
         }else{
-            displayToast("El nom i pass ha de tindre al menys 5 caracteres!");
+            displayToast("El nom i pass han de tindre al menys 5 caracteres!");
         }
     }
 
