@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.File;
 
 public class MainActivity extends MainMenu {
     static int numOption=0;
@@ -19,6 +20,7 @@ public class MainActivity extends MainMenu {
     static String usuari,clau, favorit;
     static ArrayList<User> usersDB=new ArrayList<>();
     static ImageView imgPerfil_toolbar_class;
+    static File local_DBfile_user;
 
 
 

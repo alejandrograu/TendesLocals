@@ -41,7 +41,6 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     TextView txtLatLng, txtFavorit;
     ImageView iconstar;
     Uri imageUriTrue, imageUriFalse;
-    static String [] dades=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,15 +221,16 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
         mMap.addMarker(new MarkerOptions().position(point).draggable(true));*/
 
         Log.d("PoblacionsActivity","Start onMapLongClick");
-        new PoblacioNova(this);
-        if(dades!=null){
+        new PoblacioNova(this, point, mMap);
+        /*if(dades!=null){
+            markerPoble=mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
             new FileManager().insertDB(this,markerPoble, "poblacions");
 
             //mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
-            markerPoble=mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
 
-            markerPoble.showInfoWindow();
-        }
+
+            //markerPoble.showInfoWindow();
+        }*/
 
     }
 }

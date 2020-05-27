@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -11,15 +12,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import static es.tiendaslocales.R.id;
 import static es.tiendaslocales.R.layout;
-import static es.tiendaslocales.PoblacionsActivity.dades;
 
 public class PoblacioNova {
-    Context context;
-    String dades2[]=new String[2];
 
-    public PoblacioNova(Context context) {
+    public  PoblacioNova(final Context context, final LatLng point, final GoogleMap mMap) {
         final Dialog dialog=new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -31,20 +34,27 @@ public class PoblacioNova {
         TextView txtInfo=(TextView) dialog.findViewById(id.txtinfo);
         ImageView imgAccept=(ImageView) dialog.findViewById(id.img_accept);
         ImageView imgCancel=(ImageView) dialog.findViewById(id.img_cancel);
-
-
         final Context finalContext = context;
+        Log.d("PoblacioNova","Start PoblacioNova");
+
         imgAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(editText_nom.length()<3 || editText_cp.length()<5){
-                    dades2[0]=editText_nom.getText().toString();
-                    dades2[1]=editText_cp.getText().toString();
-                    dades=dades2;
+
+                String nom=editText_nom.getText().toString();
+                String cp=editText_cp.getText().toString();
+
+                if(nom.length()>=3 && cp.length()>=5){
+                    Marker marker=mMap.addMarker(new MarkerOptions().position(point).title(nom).snippet(cp));
+                    new FileManager().insertPobleDB(context,marker);
                     dialog.dismiss();
+
                 }else{
-                    displayToast(finalContext, "No pot ser null cap dels camps!");
-                    dades=null;
+                    if(nom.length()<3){
+                        displayToast(finalContext, "El nom ha de tindre mes de 3 lletres.");
+                    }else if(cp.length()<5){
+                        displayToast(finalContext, "El CP ha de tindre al menys 5 numeros.");
+                    }
                 }
             }
         });
@@ -52,14 +62,13 @@ public class PoblacioNova {
         imgCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dades=null;
                 dialog.dismiss();
             }
         });
 
         dialog.show();
-
     }
+
 
     public void displayToast(Context context,String text){
         int duration= Toast.LENGTH_LONG;

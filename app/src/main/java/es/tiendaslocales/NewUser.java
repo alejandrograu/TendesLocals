@@ -186,7 +186,7 @@ public class NewUser extends AppCompatActivity {
                         usuariNou.usuaris();
                         usuariNou.createLocalFileUser(context);
                         usuariNou.createFileDB(context);
-                        usuariNou.uploadDB(context);
+                        usuariNou.uploadDB();
                         usuariNou.uploadImg(this,imageUri);
 
                         displayToast("Usuari Guardat Correctament!");

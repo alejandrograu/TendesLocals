@@ -15,7 +15,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public MySQLiteHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     }
 
     @Override
@@ -28,7 +27,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         for (String dbSQL : dataBaseSQL) {
             db.execSQL(dbSQL);
         }
-
     }
 
     @Override

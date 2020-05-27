@@ -39,6 +39,7 @@ import static es.tiendaslocales.MainActivity.DATABASE_VERSION;
 import static es.tiendaslocales.MainActivity.dataBaseSQL;
 import static es.tiendaslocales.MainActivity.favorit;
 import static es.tiendaslocales.MainActivity.imgPerfil_toolbar_class;
+import static es.tiendaslocales.MainActivity.local_DBfile_user;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
 
@@ -245,7 +246,7 @@ public class FileManager extends AppCompatActivity {
             Log.d("FileManager","Start fileUserExists");
             try{
                 File local_file_user= new File(context.getFilesDir(),"user");
-                File local_DBfile_user=new File(context.getFilesDir(),"DB_"+usuari);
+                local_DBfile_user=new File(context.getFilesDir(),"DB_"+usuari);
                 Log.d("FileManager","local_file_user="+ local_file_user.getAbsolutePath());
                 Log.d("FileManager","local_file_user.exists()="+local_file_user.exists());
 
@@ -361,16 +362,16 @@ public class FileManager extends AppCompatActivity {
     // ****************************************************************************
     // *   Metode per a pujar la base de dades al Firebase Storage                *
     // ****************************************************************************
-    public void uploadDB(final Context context)throws IOException{
+    public void uploadDB()throws IOException{
         Log.d("FileManager","Start uploadDB()");
-        Uri file=Uri.fromFile(new File(context.getFilesDir(),"DB_"+usuari));
+        //Uri file=Uri.fromFile(new File(this.getFilesDir(),"DB_"+usuari));
+        Uri file=Uri.fromFile(local_DBfile_user);
         Log.d("FileManager","uploadDB file="+file);
         StorageReference riversRef=storageRef.child("db/"+"DB_"+usuari);
         riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl=taskSnapshot.getUploadSessionUri();
-                displayToast(context,"uploadDB OK!");
                 Log.d("FileManager","uploadDB OK!");
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -414,8 +415,8 @@ public class FileManager extends AppCompatActivity {
         Log.d("FileManager","Start downloadDB()");
         //Uri file=Uri.fromFile(new File(usuari));
         StorageReference riversRef=storageRef.child("db").child("DB_"+usuari);
-        final File localFile=File.createTempFile("DB_"+usuari,"");
-        riversRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        local_DBfile_user=File.createTempFile("DB_"+usuari,"");
+        riversRef.getFile(local_DBfile_user).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 displayToast(context,"downloadDB OK!");
@@ -475,9 +476,9 @@ public class FileManager extends AppCompatActivity {
     public void createFileDB(Context context) throws IOException {
         Log.d("FileManager","Start createFileDB");
         try {
-            File fileDB= new File(context.getFilesDir(),"DB_"+usuari);
-            fileDB.createNewFile();
-            Log.d("FileManager","createFileDB fileDB="+fileDB.getAbsolutePath());
+            local_DBfile_user= new File(context.getFilesDir(),"DB_"+usuari);
+            local_DBfile_user.createNewFile();
+            Log.d("FileManager","createFileDB fileDB="+local_DBfile_user.getAbsolutePath());
             Log.d("FileManager","createFileDB Created!!");
             displayToast(context,"Archiu local DB creat!");
         }catch (Exception e){
@@ -486,9 +487,11 @@ public class FileManager extends AppCompatActivity {
 
     }
 
-    public void insertDB(Context context,Marker marker, String type){
+    public void insertPobleDB(Context context, Marker marker){
+        Log.d("FileManager","insertPobleDB _Start");
+
         String insert;
-        if(type.equals("poblacions")){
+
             insert="INSERT INTO poblacions(codi, nom, cp, lat, lon) VALUES (";
             insert+=marker.getId()+", "+marker.getTitle()+", "+marker.getSnippet();
             insert+=", "+marker.getPosition().latitude+", "+marker.getPosition().longitude+");";
@@ -497,20 +500,17 @@ public class FileManager extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(type.equals("tendes")){
-
-        }
 
     }
 
     public void insertarDB(Context context, String insertar) throws IOException {
         Log.d("FileManager","Start insertarDB");
-        File local_fileDB= new File(context.getFilesDir(),"DB_"+usuari);
-        BufferedWriter out=new BufferedWriter((new FileWriter(local_fileDB)));
+        //File local_fileDB= new File(context.getFilesDir(),"DB_"+usuari);
+        BufferedWriter out=new BufferedWriter((new FileWriter(local_DBfile_user)));
         out.write(insertar);
         out.close();
-        uploadDB(this);
-        Log.d("FileManager","local_fileDB="+ local_fileDB.getAbsolutePath());
+        uploadDB();
+        Log.d("FileManager","local_fileDB="+ local_DBfile_user.getAbsolutePath());
 
     }
 
@@ -518,6 +518,7 @@ public class FileManager extends AppCompatActivity {
     // *   Metodes per a mostrar misatges en pantalla   *
     // *************************************************
     public void displayToast(String text){
+
         int duration= Toast.LENGTH_LONG;
         Toast toast= Toast.makeText(this,text, duration);
         toast.show();
