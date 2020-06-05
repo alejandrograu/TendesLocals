@@ -3,6 +3,7 @@ package es.tiendaslocales;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,10 @@ public class PoblacionsDAO {
                 m.setLat(c.getDouble(3));
                 m.setLon(c.getDouble(4));
                 llistaPoblacions.add(m);
+                Log.d("PoblacionsDAO","codi:"+m.getCodi()+" poblacio:"+m.getPoblacio()+" cp:"+m.getCp());
             }while(c.moveToNext());
         }
+
         return llistaPoblacions;
     }
     public boolean insertPoblacio(Poblacio poblacio){

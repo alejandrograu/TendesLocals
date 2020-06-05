@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.R.id;
 import static es.tiendaslocales.R.layout;
 
@@ -34,7 +35,6 @@ public class PoblacioNova {
         TextView txtInfo=(TextView) dialog.findViewById(id.txtinfo);
         ImageView imgAccept=(ImageView) dialog.findViewById(id.img_accept);
         ImageView imgCancel=(ImageView) dialog.findViewById(id.img_cancel);
-        final Context finalContext = context;
         Log.d("PoblacioNova","Start PoblacioNova");
 
         imgAccept.setOnClickListener(new View.OnClickListener() {
@@ -46,14 +46,14 @@ public class PoblacioNova {
 
                 if(nom.length()>=3 && cp.length()>=5){
                     Marker marker=mMap.addMarker(new MarkerOptions().position(point).title(nom).snippet(cp));
-                    new FileManager().insertPobleDB(context,marker);
+                    Manager.insertPobleDB(context,marker);
                     dialog.dismiss();
 
                 }else{
                     if(nom.length()<3){
-                        displayToast(finalContext, "El nom ha de tindre mes de 3 lletres.");
+                        displayToast(context, "El nom ha de tindre mes de 3 lletres.");
                     }else if(cp.length()<5){
-                        displayToast(finalContext, "El CP ha de tindre al menys 5 numeros.");
+                        displayToast(context, "El CP ha de tindre al menys 5 numeros.");
                     }
                 }
             }

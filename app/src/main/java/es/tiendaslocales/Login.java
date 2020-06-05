@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.MainActivity.clau;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
@@ -43,8 +44,9 @@ public class Login extends AppCompatActivity {
                     usuari = username;
                     clau = passuser;
                     try {
-                        new FileManager().fileUserExists(this);
-                        new FileManager().usuaris();
+                        Manager.usuaris();
+                        Manager.fileUserExists(this);
+
                     }catch(Exception e){
                         Log.e("Login","Error="+e);
                     }

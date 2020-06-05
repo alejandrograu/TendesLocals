@@ -8,21 +8,20 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends MainMenu {
     static int numOption=0;
 
     static int DATABASE_VERSION;
     static ArrayList<String> dataBaseSQL=new ArrayList<>();
-    static String usuari,clau, favorit;
+    static ArrayList<String> userBaseSQL=new ArrayList<>();
     static ArrayList<User> usersDB=new ArrayList<>();
+    static String usuari,clau, favorit;
     static ImageView imgPerfil_toolbar_class;
-    static File local_DBfile_user;
-
-
+    static File local_DBfile_user, local_file_user, local_imgPerfil_user;
+    static FileManager Manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +31,44 @@ public class MainActivity extends MainMenu {
         setSupportActionBar(toolbar);
 
         imgPerfil_toolbar_class=findViewById(R.id.imgPerfil_toolbar_activity);
+        local_file_user=new File(this.getFilesDir(),"user");
 
         try {
-            usersDB=new FileManager().usuaris();
-            DATABASE_VERSION=new FileManager().FileVersion();
+            Manager=new FileManager();
+            DATABASE_VERSION=Manager.FileVersion();
             Log.d("MainActivity","DATABASE_VERSION="+DATABASE_VERSION);
-            dataBaseSQL=new FileManager().FileDatabase();
-        } catch (IOException e) {
+            dataBaseSQL=Manager.FileDatabase();
+            usersDB=Manager.usuaris();
+
+            //Manager.concatDB();
+            //Log.d("MainActivity","userBaseSQL="+userBaseSQL.toString());
+            //Log.d("MainActivity","dataBaseSQL="+dataBaseSQL.toString());
+            //Log.d("MainActivity","dataBaseSQL="+dataBaseSQL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            usuari=Manager.fileUserExists(this);
+            Log.d("MainActivity","userBaseSQL="+userBaseSQL.toString());
+            Log.d("MainActivity","dataBaseSQL="+dataBaseSQL);
+        } catch (Exception e){
             e.printStackTrace();
         }
 
         Log.d("MainActivity","userDB.size()= "+usersDB.size());
 
-        if ((new FileManager().fileUserExists(this))==null){
+        if (usuari==null){
+            Log.d("MainActivity","Manager.fileUserExists()=NULL =>"+usuari);
             Intent intent=new Intent(this, Login.class);
             startActivity(intent);
         }else{
-            displayToast("Benvingut de nou \""+usuari+"\"!");
+            try {
+                Log.d("MainActivity","usuari="+usuari);
+                displayToast("Benvingut de nou \""+usuari+"\"!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Log.d("MainActivity","Manager.fileUserExists() =>"+usuari);
         }
 
     }
@@ -56,6 +76,8 @@ public class MainActivity extends MainMenu {
         if(usuari!=null){
             numOption=1;
             Log.d("MainActivity","usuari="+usuari+" DATABASE_VERSION="+DATABASE_VERSION);
+            Log.d("MainActivity","dataBaseSQL="+dataBaseSQL.get(dataBaseSQL.size()-1));
+
             Intent intent=new Intent(this, PoblacionsActivity.class);
             startActivity(intent);
         }else{

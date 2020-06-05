@@ -24,11 +24,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static es.tiendaslocales.Login.editName;
 import static es.tiendaslocales.Login.imgPerfil_login_class;
+import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.MainActivity.imgPerfil_toolbar_class;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
@@ -123,6 +125,11 @@ public class NewUser extends AppCompatActivity {
 
     private void openCamera(){
         File fotoFile=new File(context.getFilesDir(),"fotoPerfil");
+        try {
+            fotoFile.createNewFile();
+        }catch(IOException ex){
+            Log.e("NewUser","Error creant fitxer, "+ex);
+        }
         String pathFotoFile=fotoFile.getAbsolutePath();
         Uri fotoUri=Uri.fromFile(fotoFile);
         Log.d("NewUser","fotoUri="+fotoUri);
@@ -130,6 +137,7 @@ public class NewUser extends AppCompatActivity {
         if(camera.resolveActivity(getPackageManager()) != null){
             Log.d("NewUser","openCamera if resolveActivity not null");
             camera.putExtra(MediaStore.EXTRA_OUTPUT, fotoUri);
+            //startActivityForResult(camera, 0);
             startActivityForResult(camera, RESP_TOMAR_FOTO);
         }
     }
@@ -171,7 +179,7 @@ public class NewUser extends AppCompatActivity {
         try {
             if (nom.length()>=5){
                 if (clau.length()>=5){
-                    if (new FileManager().isEqual("nom",nom)){
+                    if (Manager.isEqual("nom",nom)){
                         displayToast("Nom de usuari ja existent en la Base de Dades.\nTriar altre nom !!");
                     }else{
                         cargarDatosFirebase(nouUsuari);
@@ -182,12 +190,11 @@ public class NewUser extends AppCompatActivity {
                         imgPerfil_toolbar_class.setImageURI(imageUri);
                         Log.d("NewUser","imageUri="+imageUri);
 
-                        FileManager usuariNou=new FileManager();
-                        usuariNou.usuaris();
-                        usuariNou.createLocalFileUser(context);
-                        usuariNou.createFileDB(context);
-                        usuariNou.uploadDB();
-                        usuariNou.uploadImg(this,imageUri);
+                        Manager.usuaris();
+                        Manager.createLocalFileUser(context);
+                        Manager.createLocalFileDBUser(context);
+                        Manager.uploadDB();
+                        Manager.uploadImg(this,imageUri);
 
                         displayToast("Usuari Guardat Correctament!");
                         finish();

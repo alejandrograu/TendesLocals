@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.MainActivity.favorit;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
@@ -56,6 +57,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
                 favorit=user.getFavorit();
             }
         }
+        Log.d("PoblacionsActivity","onCreate START!");
 
         myPoblacionsDAO=new PoblacionsDAO(this);
         poblacions=myPoblacionsDAO.getPoblacions();
@@ -188,11 +190,13 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
        favorit=markerPoble.getId();
        iconstar.setImageURI(imageUriTrue);
        txtFavorit.setVisibility(View.VISIBLE);
-       for (User user:usersDB){
-           if(user.getNom().equals(usuari))
-               user.setFavorit(favorit);
-           new FileManager().insertarDades("favorit", favorit);
-       }
+
+        for (int i = 0; i <usersDB.size() ; i++) {
+            if(usersDB.get(i).getNom().equals(usuari)){
+                usersDB.get(i).setFavorit(favorit);
+            }
+        }
+        Manager.insertarDades("favorit", favorit);
     }
 
     @Override
