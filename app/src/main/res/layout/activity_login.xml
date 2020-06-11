@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/txtLogin"
+        android:id="@+id/txtProducte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -29,11 +29,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLogin"
+        app:layout_constraintTop_toBottomOf="@+id/txtProducte"
         app:srcCompat="@drawable/img_perfil" />
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/editPoblacio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
@@ -41,13 +41,13 @@
         android:ems="10"
         android:hint="NAME"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintBottom_toTopOf="@+id/btnInsertar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnInsertar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -56,10 +56,10 @@
         android:text="Login"
         app:layout_constraintEnd_toStartOf="@+id/btnNewUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPass" />
+        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -68,10 +68,10 @@
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnNewUser"
-        app:layout_constraintTop_toBottomOf="@+id/editPass" />
+        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
 
     <EditText
-        android:id="@+id/editPass"
+        android:id="@+id/editTenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -79,7 +79,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editName" />
+        app:layout_constraintTop_toBottomOf="@+id/editPoblacio" />
 
     <Button
         android:id="@+id/btnNewUser"
@@ -91,5 +91,5 @@
         android:text="NewUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPass" />
+        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ public class PoblacionsDAO {
                 Log.d("PoblacionsDAO","codi:"+m.getCodi()+" poblacio:"+m.getPoblacio()+" cp:"+m.getCp());
             }while(c.moveToNext());
         }
-
+        c.close();
         return llistaPoblacions;
     }
     public boolean insertPoblacio(Poblacio poblacio){

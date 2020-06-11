@@ -72,6 +72,13 @@ public class MainMenu extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_producte) {
+            displayToast(text + getString(R.string.txt_insertarproducte));
+            intent = new Intent(this, ProducteNou.class);
+            startActivity(intent);
+            //this.finish();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

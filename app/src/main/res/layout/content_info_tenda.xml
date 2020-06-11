@@ -71,13 +71,14 @@
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_green"
         android:drawableLeft="@android:drawable/ic_menu_call"
+        android:fontFamily="@font/amarante"
         android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/fotoTenda"
+        app:layout_constraintStart_toStartOf="@+id/fotoTenda"
         app:layout_constraintTop_toBottomOf="@+id/txt_telefon" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/fotoTenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_tenda"

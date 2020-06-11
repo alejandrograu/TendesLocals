@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ public class InfoTendaActivity extends MainMenu {
     TextView poblacio;
     TextView adresa;
     Button telefon;
+    ImageView foto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class InfoTendaActivity extends MainMenu {
         poblacio=(TextView)findViewById(R.id.txt_poblacio);
         adresa=(TextView)findViewById(R.id.txt_adresa);
         telefon=(Button)findViewById(R.id.btn_telefono);
+        foto=(ImageView) findViewById(R.id.fotoTenda);
 
         Bundle bundle=this.getIntent().getExtras();
         String nomTenda=bundle.getString("Tenda");
@@ -35,10 +38,17 @@ public class InfoTendaActivity extends MainMenu {
         String poble=objecteTenda.getPoblacio();
         String direccio=objecteTenda.getAdresa();
         String tlf=objecteTenda.getTelefon();
+        String fotoname=objecteTenda.getFoto();
         nom.setText(tenda);
         poblacio.setText(poble);
         adresa.setText(direccio);
         telefon.setText(tlf);
+        /*try {
+            foto.setImageURI(Uri.fromFile(Manager.downloadImg(this,fotoname)));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
         telefon.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.MainActivity.favorit;
+import static es.tiendaslocales.MainActivity.numOption;
 import static es.tiendaslocales.MainActivity.usersDB;
 import static es.tiendaslocales.MainActivity.usuari;
 
@@ -39,6 +40,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     private ArrayList<Poblacio> poblacions;
     private LatLng latLng;
     private PoblacionsDAO myPoblacionsDAO;
+    static Poblacio poblenou;
     TextView txtLatLng, txtFavorit;
     ImageView iconstar;
     Uri imageUriTrue, imageUriFalse;
@@ -226,6 +228,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
 
         Log.d("PoblacionsActivity","Start onMapLongClick");
         new PoblacioNova(this, point, mMap);
+        poblacions.add(poblenou);
         /*if(dades!=null){
             markerPoble=mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
             new FileManager().insertDB(this,markerPoble, "poblacions");
@@ -236,5 +239,11 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
             //markerPoble.showInfoWindow();
         }*/
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        numOption=0;
     }
 }

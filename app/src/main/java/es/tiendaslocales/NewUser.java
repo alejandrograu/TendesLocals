@@ -57,15 +57,15 @@ public class NewUser extends AppCompatActivity {
 
         imgGallery=findViewById(R.id.imgGallery);
         imgCamera=findViewById(R.id.imgCamera);
-        editNom=findViewById(R.id.editName);
-        editPass=findViewById(R.id.editPass);
-        editApell=findViewById(R.id.editLastName);
-        editDir=findViewById(R.id.editAddress);
-        editEmail=findViewById(R.id.editEmail);
-        editTelefon=findViewById(R.id.editPhone);
-        btnLogin=findViewById(R.id.btnLogin);
-        btnCancel=findViewById(R.id.btnCancel);
-        imgPerfil_newuser_class=findViewById(R.id.imgPerfil_newuser_activity);
+        editNom=findViewById(R.id.editPoblacio);
+        editPass=findViewById(R.id.editTenda);
+        editApell=findViewById(R.id.editPvp);
+        editDir=findViewById(R.id.editCategoria);
+        editEmail=findViewById(R.id.editSubCategoria);
+        editTelefon=findViewById(R.id.editDescripcio);
+        btnLogin=findViewById(R.id.btnInsertar);
+        btnCancel=findViewById(R.id.btnCancelar);
+        imgPerfil_newuser_class=findViewById(R.id.imgProducte);
         pobleFavorit="m0";
 
         imgGallery.setOnClickListener(new View.OnClickListener() {

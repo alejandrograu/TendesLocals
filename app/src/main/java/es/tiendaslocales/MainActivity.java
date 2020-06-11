@@ -22,6 +22,7 @@ public class MainActivity extends MainMenu {
     static ImageView imgPerfil_toolbar_class;
     static File local_DBfile_user, local_file_user, local_imgPerfil_user;
     static FileManager Manager;
+    static ArrayList<Producte> productesDB=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

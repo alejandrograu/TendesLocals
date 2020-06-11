@@ -17,13 +17,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.R.id;
 import static es.tiendaslocales.R.layout;
 
+import static es.tiendaslocales.PoblacionsActivity.poblenou;
+
 public class PoblacioNova {
 
-    public  PoblacioNova(final Context context, final LatLng point, final GoogleMap mMap) {
+    public PoblacioNova(final Context context, final LatLng point, final GoogleMap mMap) {
         final Dialog dialog=new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -46,7 +47,13 @@ public class PoblacioNova {
 
                 if(nom.length()>=3 && cp.length()>=5){
                     Marker marker=mMap.addMarker(new MarkerOptions().position(point).title(nom).snippet(cp));
-                    Manager.insertPobleDB(context,marker);
+                    //Manager.insertPobleDB(context,marker);
+                    poblenou=new Poblacio();
+                    poblenou.setCodi(marker.getId());
+                    poblenou.setPoblacio(nom);
+                    poblenou.setCodi(cp);
+                    poblenou.setLat(point.latitude);
+                    poblenou.setLon(point.longitude);
                     dialog.dismiss();
 
                 }else{

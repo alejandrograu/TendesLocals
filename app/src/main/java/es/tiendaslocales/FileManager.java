@@ -3,7 +3,6 @@ package es.tiendaslocales;
 
 import android.app.DownloadManager;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -267,7 +265,9 @@ public class FileManager extends AppCompatActivity {
                     }
                     if (!local_imgPerfil_user.exists()){
                         Log.d("FileManager","local_imgPerfil_user not exists!");
-                        downloadImg(context);
+                        local_imgPerfil_user=downloadImg(context, "imgPerfil_"+usuari);
+                        imgPerfil_toolbar_class.setImageURI(Uri.fromFile(local_file_user));
+
                     }else{
                         Log.d("FileManager","local_imgPerfil_user Exists!");
                         imgPerfil_toolbar_class.setImageURI(Uri.fromFile(local_imgPerfil_user));
@@ -299,6 +299,7 @@ public class FileManager extends AppCompatActivity {
         Log.d("FileManager","local_file_read="+ local_file_user.getAbsolutePath());
         usuari=fin.readLine();
         //displayToast(context, "Read Local File User OK!");
+            Log.d("FileManager","readFileUser usuari="+usuari);
         Log.d("FileManager","readFileUser OK!");
         fin.close();
         } catch (Exception e) {
@@ -336,7 +337,7 @@ public class FileManager extends AppCompatActivity {
     // *   Metode per a concatenar base de dades oficial mes la del usuari        *
     // ****************************************************************************
     public void concatDB() throws IOException {
-        try {
+        /*try {
             FileReader fr = new FileReader(String.valueOf(local_DBfile_user));
             BufferedReader br = new BufferedReader(fr);
 
@@ -350,7 +351,7 @@ public class FileManager extends AppCompatActivity {
         }
         catch(Exception e) {
             System.out.println("Excepcion leyendo fichero "+ local_DBfile_user + "=> " + e);
-        }
+        }*/
     }
 
 
@@ -435,16 +436,18 @@ public class FileManager extends AppCompatActivity {
     // *****************************************************************************
     // *   Metode per a descarregar la image de perfil de usuari a memoria interna *
     // *****************************************************************************
-    public void downloadImg(final Context context) throws IOException{
+    public File downloadImg(final Context context, String nom) throws IOException{
         Log.d("FileManager","Start downloadImg()");
-        StorageReference riversRef=storageRef.child("images").child("imgPerfil_"+usuari);
-        //final File localFile=File.createTempFile("imgPerfil_"+usuari,"");
-        riversRef.getFile(local_imgPerfil_user).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        //StorageReference riversRef=storageRef.child("images").child("imgPerfil_"+usuari);
+        StorageReference riversRef=storageRef.child("images").child(nom);
+        Log.d("FileManager","downloadImg="+riversRef);
+        final File localFile=File.createTempFile(nom,".jpg");
+        riversRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 //displayToast(context,"downloadImg OK!");
                 Log.d("FileManager","downloadImg OK!");
-                imgPerfil_toolbar_class.setImageURI(Uri.fromFile(local_imgPerfil_user));
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -452,6 +455,7 @@ public class FileManager extends AppCompatActivity {
                 Log.e("FileManager","Error en downloadDB ==>"+e);
             }
         });
+        return localFile;
     }
 
     // ****************************************************************************
@@ -485,7 +489,7 @@ public class FileManager extends AppCompatActivity {
         Log.d("FileManager","Start createLocalFileDBUser");
         String firstLine="--SQLite Database de "+usuari;
         try {
-            local_DBfile_user= new File(this.getFilesDir(),"DB_"+usuari);
+            local_DBfile_user= new File(context.getFilesDir(),"DB_"+usuari);
             local_DBfile_user.createNewFile();
             BufferedWriter out=new BufferedWriter((new FileWriter(local_DBfile_user)));
             out.write(firstLine);
@@ -500,7 +504,7 @@ public class FileManager extends AppCompatActivity {
 
     }
 
-    public void insertPobleDB(Context context, Marker marker){
+    /*public void insertPobleDB(Context context, Marker marker){
         Log.d("FileManager","insertPobleDB _Start");
 
         String insert;
@@ -523,7 +527,7 @@ public class FileManager extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 
     public void insertarDB(Context context, String insertar) throws IOException {
         Log.d("FileManager","Start insertarDB");

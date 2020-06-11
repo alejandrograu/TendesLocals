@@ -21,7 +21,7 @@
         app:navGraph="@navigation/nav_graph" /> -->
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/fotoTenda"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
