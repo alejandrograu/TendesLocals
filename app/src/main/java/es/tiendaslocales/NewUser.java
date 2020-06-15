@@ -57,15 +57,15 @@ public class NewUser extends AppCompatActivity {
 
         imgGallery=findViewById(R.id.imgGallery);
         imgCamera=findViewById(R.id.imgCamera);
-        editNom=findViewById(R.id.editPoblacio);
-        editPass=findViewById(R.id.editTenda);
-        editApell=findViewById(R.id.editPvp);
-        editDir=findViewById(R.id.editCategoria);
-        editEmail=findViewById(R.id.editSubCategoria);
-        editTelefon=findViewById(R.id.editDescripcio);
+        editNom=findViewById(R.id.editName);
+        editPass=findViewById(R.id.editPassword);
+        editApell=findViewById(R.id.editLastName);
+        editDir=findViewById(R.id.editAdress);
+        editEmail=findViewById(R.id.editeMail);
+        editTelefon=findViewById(R.id.editPhone);
         btnLogin=findViewById(R.id.btnInsertar);
         btnCancel=findViewById(R.id.btnCancelar);
-        imgPerfil_newuser_class=findViewById(R.id.imgProducte);
+        imgPerfil_newuser_class=findViewById(R.id.imgProfile);
         pobleFavorit="m0";
 
         imgGallery.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +194,7 @@ public class NewUser extends AppCompatActivity {
                         Manager.createLocalFileUser(context);
                         Manager.createLocalFileDBUser(context);
                         Manager.uploadDB();
-                        Manager.uploadImg(this,imageUri);
+                        Manager.uploadImg(this,imageUri, "images/imgPerfil_"+usuari);
 
                         displayToast("Usuari Guardat Correctament!");
                         finish();

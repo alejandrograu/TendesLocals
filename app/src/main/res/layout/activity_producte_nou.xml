@@ -28,7 +28,7 @@
         android:background="#00FFFFFF"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtgallery"
-        app:layout_constraintEnd_toStartOf="@+id/imgProducte"
+        app:layout_constraintEnd_toStartOf="@+id/imgProfile"
         app:srcCompat="@drawable/img_gallery" />
 
     <TextView
@@ -38,12 +38,12 @@
         android:fontFamily="@font/amarante"
         android:text="Gallery"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProducte"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
         app:layout_constraintEnd_toEndOf="@+id/imgGallery"
         app:layout_constraintStart_toStartOf="@+id/imgGallery" />
 
     <ImageView
-        android:id="@+id/imgProducte"
+        android:id="@+id/imgProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
@@ -53,6 +53,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLogin"
         app:srcCompat="@drawable/img_perfil" />
+
+    <TextView
+        android:id="@+id/txtNom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="NOM"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
     <ImageButton
         android:id="@+id/imgCamera"
@@ -64,7 +74,7 @@
         android:contentDescription="Image Profile"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtcamera"
-        app:layout_constraintStart_toEndOf="@+id/imgProducte"
+        app:layout_constraintStart_toEndOf="@+id/imgProfile"
         app:srcCompat="@drawable/img_camera" />
 
     <TextView
@@ -73,12 +83,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amarante"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProducte"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
         app:layout_constraintEnd_toEndOf="@+id/imgCamera"
         app:layout_constraintStart_toStartOf="@+id/imgCamera" />
 
     <EditText
-        android:id="@+id/editPoblacio"
+        android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -90,13 +100,14 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProducte" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNom" />
 
     <EditText
-        android:id="@+id/editTenda"
+        android:id="@+id/editPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint='TENDA == "t1"'
@@ -104,13 +115,14 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPoblacio" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <EditText
-        android:id="@+id/editPvp"
+        android:id="@+id/editLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="PVP == 12,50 €"
@@ -118,13 +130,14 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <EditText
-        android:id="@+id/editCategoria"
+        android:id="@+id/editAdress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="CATEGORIA == Alimentacion"
@@ -132,13 +145,14 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPvp" />
+        app:layout_constraintTop_toBottomOf="@+id/editLastName" />
 
     <EditText
-        android:id="@+id/editSubCategoria"
+        android:id="@+id/editeMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="SUBCATEGORIA == Carnes"
@@ -146,13 +160,14 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editCategoria" />
+        app:layout_constraintTop_toBottomOf="@+id/editAdress" />
 
     <EditText
-        android:id="@+id/editDescripcio"
+        android:id="@+id/editPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="DESCRIPCIO"
@@ -160,7 +175,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSubCategoria" />
+        app:layout_constraintTop_toBottomOf="@+id/editeMail" />
 
     <Button
         android:id="@+id/btnInsertar"

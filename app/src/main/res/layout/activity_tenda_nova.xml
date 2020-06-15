@@ -2,18 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutNewUser"
+    android:id="@+id/layoutTendaNova"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewUser">
+    tools:context=".TendaNova">
+
 
     <TextView
-        android:id="@+id/txtRegistre"
+        android:id="@+id/txtTenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/amarante"
-        android:text="REGISTRE"
+        android:text="TENDA"
         android:textAlignment="center"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,16 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgProfile"
+        android:id="@+id/imgTenda"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRegistre"
-        app:srcCompat="@drawable/img_perfil" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTenda"
+        app:srcCompat="@drawable/store" />
 
     <ImageButton
         android:id="@+id/imgGallery"
@@ -41,7 +41,7 @@
         android:background="#00FFFFFF"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtgallery"
-        app:layout_constraintEnd_toStartOf="@+id/imgProfile"
+        app:layout_constraintEnd_toStartOf="@+id/imgTenda"
         app:srcCompat="@drawable/img_gallery" />
 
     <TextView
@@ -51,7 +51,7 @@
         android:fontFamily="@font/amarante"
         android:text="Gallery"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTenda"
         app:layout_constraintEnd_toEndOf="@+id/imgGallery"
         app:layout_constraintStart_toStartOf="@+id/imgGallery" />
 
@@ -65,7 +65,7 @@
         android:contentDescription="Image Profile"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/txtcamera"
-        app:layout_constraintStart_toEndOf="@+id/imgProfile"
+        app:layout_constraintStart_toEndOf="@+id/imgTenda"
         app:srcCompat="@drawable/img_camera" />
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/amarante"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+        app:layout_constraintBottom_toBottomOf="@+id/imgTenda"
         app:layout_constraintEnd_toEndOf="@+id/imgCamera"
         app:layout_constraintStart_toStartOf="@+id/imgCamera" />
 
@@ -87,86 +87,53 @@
         android:layout_marginEnd="10dp"
         android:ems="10"
         android:hint="NAME"
-        android:inputType="textPersonName"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/imgTenda" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editAdressa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
-        android:hint="PASSWORD"
-        android:inputType="textVisiblePassword"
+        android:hint="ADRESSA"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <EditText
-        android:id="@+id/editLastName"
+        android:id="@+id/editTelefon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:ems="10"
-        android:hint="LastName"
+        android:hint="TELEFON"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAdressa" />
+
+    <EditText
+        android:id="@+id/editTipus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:hint="TIPUS"
         android:inputType="textPersonName"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
-
-    <EditText
-        android:id="@+id/editAdress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editLastName" />
-
-    <EditText
-        android:id="@+id/editeMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="eMail"
-        android:inputType="textEmailAddress"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAdress" />
-
-    <EditText
-        android:id="@+id/editPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="Phone"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editeMail" />
+        app:layout_constraintTop_toBottomOf="@+id/editTelefon" />
 
     <Button
         android:id="@+id/btnInsertar"
@@ -174,7 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/gradient_green"
-        android:onClick="login"
         android:text="Crear"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCancelar"
@@ -186,7 +152,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="@drawable/gradient_red"
-        android:onClick="cancel"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

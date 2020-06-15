@@ -382,16 +382,16 @@ public class FileManager extends AppCompatActivity {
     // ****************************************************************************
     // *   Metode per a pujar la image del usuari al Firebase Storage             *
     // ****************************************************************************
-    public void uploadImg(final Context context, final Uri uri){
+    public void uploadImg(final Context context, final Uri uri, String ruta){
         Log.d("FileManager","Start uploadImg()");
         //Uri file=Uri.fromFile(new File(context.getFilesDir(),usuari+"DB"));
         Log.d("FileManager","uploadImg file="+uri);
-        StorageReference riversRef=storageRef.child("images/imgPerfil_"+usuari);
+        StorageReference riversRef=storageRef.child(ruta);
         riversRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadUrl=taskSnapshot.getUploadSessionUri();
-                imgPerfil_toolbar_class.setImageURI(uri);
+                //imgPerfil_toolbar_class.setImageURI(uri);
                 //displayToast(context,"uploadImg OK!");
                 Log.d("FileManager","uploadImg OK!");
             }

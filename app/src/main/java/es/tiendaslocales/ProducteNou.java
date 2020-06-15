@@ -28,11 +28,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static es.tiendaslocales.MainActivity.Manager;
 import static es.tiendaslocales.MainActivity.productesDB;
 
 public class ProducteNou extends AppCompatActivity {
 
     private String codi;
+    private String nom;
     private String poblacio;
     private String tenda;
     private String pvp;
@@ -42,7 +44,7 @@ public class ProducteNou extends AppCompatActivity {
     private String imageProducte;
 
     DatabaseReference producteReference= FirebaseDatabase.getInstance().getReference().child("productes");
-    EditText editPoblacio, editTenda, editPvp, editDescripcio, editCategoria, editSubCategoria;
+    EditText editNom, editPoblacio, editTenda, editPvp, editDescripcio, editCategoria, editSubCategoria;
     ImageView imageViewProducte;
     ImageButton imgGallery, imgCamera;
     Button btnInsertar, btnCancelar;
@@ -57,18 +59,18 @@ public class ProducteNou extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producte_nou);
 
-        imageUri=Uri.parse("android.resource://"+getPackageName()+"/"+R.drawable.img_perfil);
+        imageUri=Uri.parse("android.resource://"+getPackageName()+"/"+R.drawable.icon_alimentacion);
         imageProducte="";
 
         imgGallery=findViewById(R.id.imgGallery);
         imgCamera=findViewById(R.id.imgCamera);
-        editPoblacio=findViewById(R.id.editPoblacio);
-        editTenda=findViewById(R.id.editTenda);
-        editPvp=findViewById(R.id.editPvp);
-        editCategoria=findViewById(R.id.editCategoria);
-        editSubCategoria=findViewById(R.id.editSubCategoria);
-        editDescripcio=findViewById(R.id.editDescripcio);
-        imageViewProducte=findViewById(R.id.imgProducte);
+        editPoblacio=findViewById(R.id.editName);
+        editTenda=findViewById(R.id.editPassword);
+        editPvp=findViewById(R.id.editLastName);
+        editCategoria=findViewById(R.id.editAdress);
+        editSubCategoria=findViewById(R.id.editeMail);
+        editDescripcio=findViewById(R.id.editPhone);
+        imageViewProducte=findViewById(R.id.imgProfile);
         btnInsertar=findViewById(R.id.btnInsertar);
         btnCancelar=findViewById(R.id.btnCancelar);
 
@@ -160,7 +162,7 @@ public class ProducteNou extends AppCompatActivity {
             Log.d("ProducteNou","resultCode="+resultCode);
             Log.d("ProducteNou","data="+data);
             Log.d("ProducteNou","imageUri="+imageUri);
-            Log.d("ProducteNou","imgPerfil_newuser_class="+imageViewProducte);
+            Log.d("ProducteNou","imageViewProducte="+imageViewProducte);
         }
     }
 
@@ -169,6 +171,7 @@ public class ProducteNou extends AppCompatActivity {
 
         Producte nouProducte=new Producte();
 
+        nom=editNom.getText().toString();
         poblacio=editPoblacio.getText().toString();
         tenda=editTenda.getText().toString();
         pvp=editPvp.getText().toString();
@@ -176,6 +179,7 @@ public class ProducteNou extends AppCompatActivity {
         subcategoria=editSubCategoria.getText().toString();
         descripcio=editDescripcio.getText().toString();
 
+        nouProducte.setNom(nom);
         nouProducte.setPoblacio(poblacio);
         nouProducte.setTenda(tenda);
         nouProducte.setPvp(pvp);
@@ -188,6 +192,7 @@ public class ProducteNou extends AppCompatActivity {
 
             cargarDatosFirebase(nouProducte);
             productesDB.add(nouProducte);
+            Manager.uploadImg(this,imageUri, "images/productes/producte_"+nom);
             displayToast("Producte Guardat Correctament!");
             finish();
 

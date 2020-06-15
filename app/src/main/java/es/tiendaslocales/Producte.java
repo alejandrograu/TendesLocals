@@ -2,6 +2,7 @@ package es.tiendaslocales;
 
 public class Producte {
 
+    private String nom;
     private String poblacio;
     private String tenda;
     private String pvp;
@@ -13,7 +14,8 @@ public class Producte {
     public void Producte(){
 
     }
-    public void Producte(String poblacio, String tenda, String pvp, String categoria, String subcategoria, String descripcio, String image){
+    public void Producte(String nom,String poblacio, String tenda, String pvp, String categoria, String subcategoria, String descripcio, String image){
+        this.nom=nom;
         this.poblacio=poblacio;
         this.tenda=tenda;
         this.pvp=pvp;
@@ -22,6 +24,10 @@ public class Producte {
         this.descripcio=descripcio;
         this.image=image;
     }
+
+    public String getNom(){ return nom; }
+
+    public void setNom(String nom) {this.nom=nom; }
 
     public String getPoblacio() {
         return poblacio;

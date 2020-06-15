@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/txtProducte"
+        android:id="@+id/txtTenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -29,11 +29,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtProducte"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegistre"
         app:srcCompat="@drawable/img_perfil" />
 
     <EditText
-        android:id="@+id/editPoblacio"
+        android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
@@ -56,7 +56,7 @@
         android:text="Login"
         app:layout_constraintEnd_toStartOf="@+id/btnNewUser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <Button
         android:id="@+id/btnCancelar"
@@ -68,10 +68,10 @@
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnNewUser"
-        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <EditText
-        android:id="@+id/editTenda"
+        android:id="@+id/editPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -79,7 +79,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPoblacio" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <Button
         android:id="@+id/btnNewUser"
@@ -91,5 +91,5 @@
         android:text="NewUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTenda" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

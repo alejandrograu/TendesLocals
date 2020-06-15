@@ -1,5 +1,6 @@
 package es.tiendaslocales;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -60,6 +61,28 @@ public class TendesDAO {
         }
         Log.d("TendesDAO","tendes="+llistaTendes.size());
         return llistaTendes;
+    }
+
+    public boolean insertarTenda(Tenda tenda){
+        try{
+            ContentValues nv=new ContentValues();
+            nv.put("codi",tenda.getCodi());
+            nv.put("nom",tenda.getNom());
+            nv.put("lat",tenda.getLat());
+            nv.put("lon",tenda.getLon());
+            nv.put("poblacio",tenda.getPoblacio());
+            nv.put("adress", tenda.getAdresa());
+            nv.put("telefon",tenda.getTelefon());
+            nv.put("foto",tenda.getFoto());
+            nv.put("tipus",tenda.getTipus());
+
+            db.insert("tendes",null,nv);
+            Log.d("TendesDAO","inertarTenda OK!");
+            return true;
+        }catch (Exception e) {
+            Log.e("TendesDAO","ERROR insertarTenda => "+e);
+            return false;
+        }
     }
 
 

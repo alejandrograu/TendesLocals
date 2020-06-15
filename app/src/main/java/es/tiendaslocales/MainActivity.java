@@ -92,7 +92,7 @@ public class MainActivity extends MainMenu {
     public void clickBtntoShop(View view) {
         if(usuari!=null){
             numOption=2;
-            Intent intent=new Intent(this, PoblacionsActivity.class);
+            Intent intent=new Intent(this, ShopsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }else{

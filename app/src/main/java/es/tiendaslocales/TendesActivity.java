@@ -16,14 +16,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TendesActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener {
+public class TendesActivity extends MainMenu implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,GoogleMap.OnMapClickListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
-    private ArrayList<Tenda> tendes;
+    static ArrayList<Tenda> tendes;
     private Tenda tenda;
     private LatLng latLng;
-    private TendesDAO tendesDAO;
+    static TendesDAO tendesDAO;
     private Marker markerTenda;
+    static Tenda tendaNova;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,13 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
         Bundle bundle=this.getIntent().getExtras();
         try {
             tendesDAO=new TendesDAO(this);
+            tendes=tendesDAO.getTendesPoblacio(bundle.getString("poblacio"));
+            Log.d("TendesActivity","onCreate");
+            Log.d("TendesActivity","tendes.size(): "+tendes.size());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tendes=tendesDAO.getTendesPoblacio(bundle.getString("poblacio"));
-        Log.d("TendesActivity","onCreate");
-        Log.d("TendesActivity","tendes.size(): "+tendes.size());
+
 
     }
 
@@ -53,13 +55,17 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
 
         Log.d("TendesActivity","onMapReady Start");
         Log.d("TendesActivity","tendes.size(): "+tendes.size());
+        try{
+            for(int i=0;i<tendes.size();i++){
+                latLng = new LatLng((float)tendes.get(i).getLat(),(float)tendes.get(i).getLon());
+                Log.d("TendesActivity","latLng:"+latLng);
+                mMap.addMarker(new MarkerOptions().position(latLng).title(tendes.get(i).getNom()).snippet(tendes.get(i).getTelefon()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-        for(int i=0;i<tendes.size();i++){
-            latLng = new LatLng((float)tendes.get(i).getLat(),(float)tendes.get(i).getLon());
-            Log.d("TendesActivity","latLng:"+latLng);
-            mMap.addMarker(new MarkerOptions().position(latLng).title(tendes.get(i).getNom()).snippet(tendes.get(i).getTelefon()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
+            }
+        }catch (Exception e){
+            Log.e("TendesActivity","tendes.size() is null ERROR => "+e);
         }
+
         //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
@@ -98,5 +104,14 @@ public class TendesActivity extends MainMenu implements OnMapReadyCallback, Goog
         Log.d("TendesActivity","onMarkerClick marker.getTitle()="+marker.getTitle());
         intent.putExtras(b);
         startActivity(intent);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng point) {
+
+        Log.d("TendesActivity","Start onMapLongClick");
+        new PoblacioNova(this, point, mMap);
+
+
     }
 }

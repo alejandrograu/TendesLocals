@@ -60,7 +60,8 @@ public class MainMenu extends AppCompatActivity {
         if (id == R.id.action_shop) {
             numOption=2;
             displayToast(text + getString(R.string.txt_action_shop));
-            return true;
+            intent = new Intent(this, ShopsActivity.class);
+            startActivity(intent);
         }
         if (id == R.id.action_info) {
             String msg="";
@@ -76,7 +77,6 @@ public class MainMenu extends AppCompatActivity {
             displayToast(text + getString(R.string.txt_insertarproducte));
             intent = new Intent(this, ProducteNou.class);
             startActivity(intent);
-            //this.finish();
         }
 
         return super.onOptionsItemSelected(item);

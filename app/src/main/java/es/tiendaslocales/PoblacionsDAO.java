@@ -1,5 +1,6 @@
 package es.tiendaslocales;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,14 +38,29 @@ public class PoblacionsDAO {
         return llistaPoblacions;
     }
     public boolean insertPoblacio(Poblacio poblacio){
-        String codi=poblacio.getCodi();
+        try{
+            ContentValues nv=new ContentValues();
+            nv.put("codi",poblacio.getCodi());
+            nv.put("nom",poblacio.getPoblacio());
+            nv.put("cp",poblacio.getCp());
+            nv.put("lat",poblacio.getLat());
+            nv.put("lon",poblacio.getLon());
+            db.insert("poblacions",null,nv);
+            Log.d("PoblacionsDAO","inertarPoblacio OK!");
+            return true;
+        }catch (Exception e) {
+            Log.e("PoblacionsDAO","ERROR insertarPoblacio => "+e);
+            return false;
+        }
+
+        /*String codi=poblacio.getCodi();
         String nom=poblacio.getPoblacio();
         String cp=poblacio.getCp();
         double lat=poblacio.getLat();
         double lon=poblacio.getLon();
         String sql="INSERT INTO poblacions (codi, nom, cp, lat, lon) VALUE ('"+codi+"','"+nom+"','"+cp+"','"+lat+"','"+lon+"');";
         db.execSQL(sql);
-        return true;
+        return true;*/
     }
     public boolean deletePoblacio(String key){
         return false;

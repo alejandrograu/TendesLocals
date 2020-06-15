@@ -37,9 +37,9 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
     private Marker markerPoble;
     private LatLng homeLatLng = new LatLng(39.470120, -0.377187);
     private GoogleMap mMap;
-    private ArrayList<Poblacio> poblacions;
+    static ArrayList<Poblacio> poblacions;
     private LatLng latLng;
-    private PoblacionsDAO myPoblacionsDAO;
+    static PoblacionsDAO myPoblacionsDAO;
     static Poblacio poblenou;
     TextView txtLatLng, txtFavorit;
     ImageView iconstar;
@@ -203,16 +203,19 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        if(!markerPoble.getId().equals("m0")){
-            Intent intent=new Intent(this,TendesActivity.class);
-            Bundle b=new Bundle();
-            b.putString("poblacio",markerPoble.getId());
-            b.putString("cp",markerPoble.getSnippet());
-            intent.putExtras(b);
-            startActivity(intent);
-        }else{
-
+        try{
+            if(!markerPoble.getId().equals("m0")){
+                Intent intent=new Intent(this,TendesActivity.class);
+                Bundle b=new Bundle();
+                b.putString("poblacio",markerPoble.getId());
+                b.putString("cp",markerPoble.getSnippet());
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        }catch (Exception e){
+            Log.e("PoblacionsActivity","onInfoWindowClick ERROR => "+e);
         }
+
     }
 
     @Override
@@ -228,7 +231,7 @@ public class PoblacionsActivity extends MainMenu implements OnMapReadyCallback, 
 
         Log.d("PoblacionsActivity","Start onMapLongClick");
         new PoblacioNova(this, point, mMap);
-        poblacions.add(poblenou);
+
         /*if(dades!=null){
             markerPoble=mMap.addMarker(new MarkerOptions().position(point).title(dades[0]).snippet(dades[1]));
             new FileManager().insertDB(this,markerPoble, "poblacions");

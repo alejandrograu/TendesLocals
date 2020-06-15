@@ -17,10 +17,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static es.tiendaslocales.PoblacionsActivity.myPoblacionsDAO;
+import static es.tiendaslocales.PoblacionsActivity.poblacions;
+import static es.tiendaslocales.PoblacionsActivity.poblenou;
 import static es.tiendaslocales.R.id;
 import static es.tiendaslocales.R.layout;
-
-import static es.tiendaslocales.PoblacionsActivity.poblenou;
 
 public class PoblacioNova {
 
@@ -38,6 +39,7 @@ public class PoblacioNova {
         ImageView imgCancel=(ImageView) dialog.findViewById(id.img_cancel);
         Log.d("PoblacioNova","Start PoblacioNova");
 
+
         imgAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +56,9 @@ public class PoblacioNova {
                     poblenou.setCodi(cp);
                     poblenou.setLat(point.latitude);
                     poblenou.setLon(point.longitude);
+                    if(myPoblacionsDAO.insertPoblacio(poblenou)){
+                        poblacions.add(poblenou);
+                    }
                     dialog.dismiss();
 
                 }else{

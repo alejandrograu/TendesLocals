@@ -82,11 +82,11 @@ public class User {
     public String getText(){
         String text="nom="+nom+"\n";
         text+="clau="+clau+"\n";
-        text+="clau="+cognoms+"\n";
-        text+="clau="+direccio+"\n";
-        text+="clau="+email+"\n";
-        text+="clau="+telefon+"\n";
-        text+="clau="+imgperfil+"\n";
+        text+="cognoms="+cognoms+"\n";
+        text+="direccio="+direccio+"\n";
+        text+="email="+email+"\n";
+        text+="telefon="+telefon+"\n";
+        text+="imgperfil="+imgperfil+"\n";
         text+="favorit="+favorit+"\n";
         return text;
     }

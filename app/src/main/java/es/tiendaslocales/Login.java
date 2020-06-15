@@ -29,8 +29,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         imgPerfil_login_class=findViewById(R.id.imgPerfil_login_activity);
-        editName=findViewById(R.id.editPoblacio);
-        editPass=findViewById(R.id.editTenda);
+        editName=findViewById(R.id.editName);
+        editPass=findViewById(R.id.editPassword);
     }
 
     public void login(View view){
